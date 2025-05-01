@@ -12,11 +12,13 @@ public class ContextoDados
 
     public List<Fornecedor> Fornecedores { get; set; }
     public List<Paciente> Pacientes { get; set; }
+    public List<Paciente> Funcionarios { get; set; }
 
     public ContextoDados()
     {
         Fornecedores = new List<Fornecedor>();  
         Pacientes = new List<Paciente>();
+        Funcionarios = new List<Paciente>();
     }
 
     public ContextoDados(bool carregarDados) : this()
@@ -60,5 +62,6 @@ public class ContextoDados
 
         Fornecedores = contextoArmazenado.Fornecedores;
         Pacientes = contextoArmazenado.Pacientes;
+        Funcionarios = contextoArmazenado.Pacientes;
     }
 }

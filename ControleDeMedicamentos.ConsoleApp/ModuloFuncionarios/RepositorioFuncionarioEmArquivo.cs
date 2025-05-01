@@ -9,7 +9,7 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloFuncionarios
         }
         protected override List<Funcionario> ObterRegistros()
         {
-                  return contexto.Func;
+                  return contexto.f;
         }
     }
 }
