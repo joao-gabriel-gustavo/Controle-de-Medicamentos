@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ControleDeMedicamentos.ConsoleApp": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
