@@ -13,8 +13,17 @@ public class RepositorioFornecedorEmArquivo : RepositorioBaseEmArquivo<Fornecedo
         return contexto.Fornecedores;
     }
 
-    public void VerificacaoCNPJ()
+    public bool VerificacaoCNPJ(string CNPJ)
     {
+        List<Fornecedor> fornecedores = new List<Fornecedor>();
+        fornecedores = ObterRegistros();
+        bool cnpjExiste = false;
 
+        foreach( Fornecedor item in fornecedores)
+        {
+            if (item.CNPJ == CNPJ)
+                cnpjExiste = true;
+        }
+        return cnpjExiste;
     }
 }

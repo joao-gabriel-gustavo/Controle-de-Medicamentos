@@ -15,12 +15,31 @@ public class TelaFornecedor : TelaBase<Fornecedor>, ITelaCrud
         Console.Write("Digite o telefone: ");
         string telefone = Console.ReadLine()!;
 
+        ContextoDados contexto = new ContextoDados();
+        RepositorioFornecedorEmArquivo repositorioFornecedor = new RepositorioFornecedorEmArquivo(contexto);
+
         Console.Write("Digite o CNPJ no formato: XX.XXX.XXX/XXX-XX");
         string cnpj = Console.ReadLine()!;
 
-        Fornecedor fornecedor = new Fornecedor(nome, telefone, cnpj);
+        bool cnpjExiste = false;
 
-        return fornecedor;
+        cnpjExiste = repositorioFornecedor.VerificacaoCNPJ(cnpj);
+
+        if (!cnpjExiste)
+        {
+            Fornecedor fornecedor = new Fornecedor(nome, telefone, cnpj);
+            return fornecedor;
+        }
+
+        else 
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine("Este CNPJ ja esta cadastrado no nosso sistema, Aperte ENTER para tentar novamente");
+            Console.ReadLine();
+            Console.ResetColor();
+            ObterDados();
+            return null;
+        }
     }
     protected override void ExibirCabecalhoTabela()
     {

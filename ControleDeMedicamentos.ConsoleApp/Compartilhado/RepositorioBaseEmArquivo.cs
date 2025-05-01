@@ -2,9 +2,8 @@
 
 public abstract class RepositorioBaseEmArquivo<T> where T : EntidadeBase<T>
 {
-    private List<T> registros = new List<T>();
+    public List<T> registros = new List<T>();
     private int contadorIds = 0;
-
     protected ContextoDados contexto;
 
     protected RepositorioBaseEmArquivo(ContextoDados contexto)
