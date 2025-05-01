@@ -15,6 +15,10 @@ namespace ControleDeMedicamentos.ConsoleApp
                 telaPrincipal.ApresentarMenuPrincipal();
 
                 ITelaCrud telaSelecionada = telaPrincipal.ObterTela();
+                
+                // Funcionou mas não sei se é o ideal
+                if (telaSelecionada == null)
+                    break;
 
                 char opcaoEscolhida = telaSelecionada.ApresentarMenu();
 
