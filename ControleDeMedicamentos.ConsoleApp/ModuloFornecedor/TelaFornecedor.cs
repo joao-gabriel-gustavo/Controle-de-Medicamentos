@@ -7,7 +7,6 @@ public class TelaFornecedor : TelaBase<Fornecedor>, ITelaCrud
     public TelaFornecedor(IRepositorioFornecedor repositorio) : base("Fornecedor", repositorio)
     {
     }
-
     public override Fornecedor ObterDados()
     {
         Console.Write( "Digite o nome: " );
@@ -16,14 +15,13 @@ public class TelaFornecedor : TelaBase<Fornecedor>, ITelaCrud
         Console.Write("Digite o telefone: ");
         string telefone = Console.ReadLine()!;
 
-        Console.Write("Digite o CNPJ: ");
+        Console.Write("Digite o CNPJ no formato: XX.XXX.XXX/XXX-XX");
         string cnpj = Console.ReadLine()!;
 
         Fornecedor fornecedor = new Fornecedor(nome, telefone, cnpj);
 
         return fornecedor;
     }
-
     protected override void ExibirCabecalhoTabela()
     {
         Console.WriteLine("{0, -10} | {1, -30} | {2, -20} | {3, -20}", 

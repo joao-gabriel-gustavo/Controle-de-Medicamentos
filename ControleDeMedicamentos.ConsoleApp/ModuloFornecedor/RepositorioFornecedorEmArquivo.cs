@@ -12,4 +12,9 @@ public class RepositorioFornecedorEmArquivo : RepositorioBaseEmArquivo<Fornecedo
     {
         return contexto.Fornecedores;
     }
+
+    public void VerificacaoCNPJ()
+    {
+
+    }
 }
