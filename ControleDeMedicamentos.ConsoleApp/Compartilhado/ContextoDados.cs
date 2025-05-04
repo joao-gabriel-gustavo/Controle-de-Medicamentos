@@ -4,6 +4,7 @@ using ControleDeMedicamentos.ConsoleApp.ModuloFornecedor;
 using ControleDeMedicamentos.ConsoleApp.ModuloPaciente;
 using ControleDeMedicamentos.ConsoleApp.ModuloMedicamento;
 using ControleDeMedicamentos.ConsoleApp.ModuloFuncionarios;
+using ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida;
 
 namespace ControleDeMedicamentos.ConsoleApp.Compartilhado;
 
@@ -16,6 +17,7 @@ public class ContextoDados
     public List<Paciente> Pacientes { get; set; }
     public List<Medicamento> Medicamentos { get; set; }
     public List<Funcionario> Funcionarios { get; set; }
+    public List<RequisicoesSaida> requisicoesSaidas { get; set; }
 
     public ContextoDados()
     {
@@ -23,6 +25,7 @@ public class ContextoDados
         Pacientes = new List<Paciente>();
         Medicamentos = new List<Medicamento>();
         Funcionarios = new List<Funcionario>();
+        requisicoesSaidas = new List<RequisicoesSaida>();
     }
 
     public ContextoDados(bool carregarDados) : this()
@@ -68,5 +71,6 @@ public class ContextoDados
         Pacientes = contextoArmazenado.Pacientes;
         Medicamentos = contextoArmazenado.Medicamentos;
         Funcionarios = contextoArmazenado.Funcionarios;
+        requisicoesSaidas = contextoArmazenado.requisicoesSaidas;
     }
 }
