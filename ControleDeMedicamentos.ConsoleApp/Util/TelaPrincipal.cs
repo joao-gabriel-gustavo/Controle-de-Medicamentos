@@ -2,6 +2,7 @@
 using ControleDeMedicamentos.ConsoleApp.ModuloFornecedor;
 using ControleDeMedicamentos.ConsoleApp.ModuloFuncionarios;
 using ControleDeMedicamentos.ConsoleApp.ModuloPaciente;
+using ControleDeMedicamentos.ConsoleApp.ModuloMedicamento;
 
 namespace ControleDeMedicamentos.ConsoleApp.Util;
 
@@ -12,6 +13,7 @@ public class TelaPrincipal
     private ContextoDados contexto;
     private TelaFornecedor telaFornecedor;
     private TelaPaciente telaPaciente;
+    private TelaMedicamento telaMedicamento;
     private TelaFuncionario telaFuncionario;
 
     public TelaPrincipal()
@@ -23,6 +25,9 @@ public class TelaPrincipal
 
         IRepositorioPaciente repositorioPaciente = new RepositorioPacienteEmArquivo(contexto);
         telaPaciente = new TelaPaciente(repositorioPaciente);
+        
+        IRepositorioMedicamento repositorioMedicamento = new RepositorioMedicamentoEmArquivo(contexto);
+        telaMedicamento = new TelaMedicamento(repositorioMedicamento, repositorioFornecedor, telaFornecedor);
 
         IRepositorioFuncionario repositorioFuncionario = new RepositorioFuncionarioEmArquivo(contexto);
         telaFuncionario = new TelaFuncionario(repositorioFuncionario);
@@ -40,7 +45,8 @@ public class TelaPrincipal
 
         Console.WriteLine("1 - Cadastro de Fornecedores");
         Console.WriteLine("2 - Controle de Pacientes");
-        Console.WriteLine("3 - Controle de Funcionarios");
+        Console.WriteLine("3 - Controle de Medicamentos");
+        Console.WriteLine("4 - Controle de Funcionarios");
         Console.WriteLine("S - Sair");
 
         Console.WriteLine();
@@ -56,8 +62,11 @@ public class TelaPrincipal
 
         if (opcaoPrincipal == '2')
             return telaPaciente;
-
+            
         if (opcaoPrincipal == '3')
+            return telaMedicamento;
+
+        if (opcaoPrincipal == '4')
             return telaFuncionario;
 
         return null;
