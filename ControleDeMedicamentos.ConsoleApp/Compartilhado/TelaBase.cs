@@ -1,4 +1,5 @@
-﻿using ControleDeMedicamentos.ConsoleApp.Util;
+﻿using ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida;
+using ControleDeMedicamentos.ConsoleApp.Util;
 
 namespace ControleDeMedicamentos.ConsoleApp.Compartilhado;
 
@@ -6,11 +7,19 @@ public abstract class TelaBase<T> where T : EntidadeBase<T>
 {
     protected string nomeEntidade;
     protected IRepositorio<T> repositorio;
+    private string v;
+    private IRepositorioRequisicoesSaida repositorio1;
 
     protected TelaBase(string nomeEntidade, IRepositorio<T> repositorio)
     {
         this.nomeEntidade = nomeEntidade;
         this.repositorio = repositorio;
+    }
+
+    protected TelaBase(string v, IRepositorioRequisicoesSaida repositorio1)
+    {
+        this.v = v;
+        this.repositorio1 = repositorio1;
     }
 
     public void ExibirCabecalho()

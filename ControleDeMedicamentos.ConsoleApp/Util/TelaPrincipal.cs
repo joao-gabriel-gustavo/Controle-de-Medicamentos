@@ -3,6 +3,7 @@ using ControleDeMedicamentos.ConsoleApp.ModuloFornecedor;
 using ControleDeMedicamentos.ConsoleApp.ModuloFuncionarios;
 using ControleDeMedicamentos.ConsoleApp.ModuloPaciente;
 using ControleDeMedicamentos.ConsoleApp.ModuloMedicamento;
+using ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida;
 
 namespace ControleDeMedicamentos.ConsoleApp.Util;
 
@@ -15,11 +16,11 @@ public class TelaPrincipal
     private TelaPaciente telaPaciente;
     private TelaMedicamento telaMedicamento;
     private TelaFuncionario telaFuncionario;
+    private TelaRequisicoesSaida telaRequisicoesSaida;
 
     public TelaPrincipal()
     {
         contexto = new ContextoDados(true);
-
         IRepositorioFornecedor repositorioFornecedor = new RepositorioFornecedorEmArquivo(contexto);
         telaFornecedor = new TelaFornecedor(repositorioFornecedor);
 
@@ -31,6 +32,10 @@ public class TelaPrincipal
 
         IRepositorioFuncionario repositorioFuncionario = new RepositorioFuncionarioEmArquivo(contexto);
         telaFuncionario = new TelaFuncionario(repositorioFuncionario);
+
+      
+        IRepositorioRequisicoesSaida repositorioRequisicoesSaida = new RepositorioRequisicoesSaidaEmArquivo(contexto);
+        telaRequisicoesSaida = new TelaRequisicoesSaida(repositorioRequisicoesSaida, telaPaciente, telaMedicamento, (RepositorioMedicamentoEmArquivo)repositorioMedicamento, (RepositorioPacienteEmArquivo)repositorioPaciente);
     }
 
     public void ApresentarMenuPrincipal()
@@ -47,6 +52,7 @@ public class TelaPrincipal
         Console.WriteLine("2 - Controle de Pacientes");
         Console.WriteLine("3 - Controle de Medicamentos");
         Console.WriteLine("4 - Controle de Funcionarios");
+        Console.WriteLine("5 - Controle de Requisições de Saida");
         Console.WriteLine("S - Sair");
 
         Console.WriteLine();
@@ -69,6 +75,13 @@ public class TelaPrincipal
         if (opcaoPrincipal == '4')
             return telaFuncionario;
 
-        return null;
+        if (opcaoPrincipal == '5')
+            return telaRequisicoesSaida;
+
+        else
+            return null;
+
     }
+
+
 }

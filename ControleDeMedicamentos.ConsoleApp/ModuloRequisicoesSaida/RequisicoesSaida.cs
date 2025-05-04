@@ -29,7 +29,13 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida
         public override string Validar()
         {
             string erros = "";
-            return erros;
+            DateTime anosDoisMil = new DateTime(01/01/2000);
+            if (dataRequisicaoSaida < anosDoisMil)
+            {
+                erros += "Não permitimos o cadastro de requisicoes  com datas anteriores o de dois mil";
+            }
+
+            return erros.Trim();
         }
     }
 }

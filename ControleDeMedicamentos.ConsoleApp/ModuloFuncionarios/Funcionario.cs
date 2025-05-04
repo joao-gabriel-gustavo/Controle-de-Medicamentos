@@ -1,7 +1,6 @@
 ﻿
 
 using ControleDeMedicamentos.ConsoleApp.Compartilhado;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Text.RegularExpressions;
 
 namespace ControleDeMedicamentos.ConsoleApp.ModuloFuncionarios
