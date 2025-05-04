@@ -9,14 +9,14 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida
 {
     public class TelaRequisicoesSaida : TelaBase<RequisicoesSaida>, ITelaCrud
     {
-        public Paciente paciente;
-        public Medicamento medicamento;
+        public Paciente pacienteSelecionado = new Paciente("tralala", "tralala", "tralala");
+        public Medicamento medicamentoSelecionado = new Medicamento("tralala", "tralala", 0, default!);
         public TelaPaciente telaPaciente;
         public TelaMedicamento telaMedicamento;
         public RepositorioMedicamentoEmArquivo repositorioMedicamento;
         public RepositorioPacienteEmArquivo repositorioPaciente;
 
-        public TelaRequisicoesSaida(IRepositorioRequisicoesSaida repositorio, TelaPaciente telaPaciente, TelaMedicamento telaMedicamento, RepositorioMedicamentoEmArquivo repositorioMedicamento, RepositorioPacienteEmArquivo repositorioPaciente) : base("RequisicoesDeSaida", repositorio)
+        public TelaRequisicoesSaida(IRepositorioRequisicoesSaida repositorio, TelaPaciente telaPaciente, TelaMedicamento telaMedicamento, RepositorioMedicamentoEmArquivo repositorioMedicamento, RepositorioPacienteEmArquivo repositorioPaciente) : base("Requisicoes de Saida", repositorio)
         {
             this.telaPaciente = telaPaciente;
             this.telaMedicamento = telaMedicamento;
@@ -48,13 +48,11 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida
                 VerificarIdMedicamentoEQuantidade(default, quantidadeMedicamento);
             }
 
-
-          
-                RequisicoesSaida requisicaoSaida = new RequisicoesSaida(dataRequisicaoSaida, paciente, medicamento);
+                RequisicoesSaida requisicaoSaida = new RequisicoesSaida();
+                requisicaoSaida.dataRequisicaoSaida = dataRequisicaoSaida;
+                requisicaoSaida.paciente = pacienteSelecionado;
+                requisicaoSaida.medicamentoRequisicao = medicamentoSelecionado;
                 return requisicaoSaida;
-            
-
-           
         }
 
         private bool VerificarIdMedicamentoEQuantidade(int idMedicamento, int quantidadeMedicamentos)
@@ -70,7 +68,10 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida
                     {
                         if(idMedicamento == repositorioMedicamento.registros[i].Id)
                         {
-                            medicamento = repositorioMedicamento.registros[i];
+                            medicamentoSelecionado.Nome = repositorioMedicamento.registros[i].Nome;
+                            medicamentoSelecionado.Descricao = repositorioMedicamento.registros[i].Descricao;
+                            medicamentoSelecionado.QuantidadeEmEstoque = repositorioMedicamento.registros[i].QuantidadeEmEstoque;
+                            medicamentoSelecionado.Fornecedor = repositorioMedicamento.registros[i].Fornecedor;
                             repositorioMedicamento.registros[i].QuantidadeEmEstoque = (repositorioMedicamento.registros[i].QuantidadeEmEstoque - quantidadeMedicamentos);
                         }
                     }
@@ -88,9 +89,12 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida
 
                 foreach (Paciente item in pacientes)
                 {
-                    if (item.Id == idPaciente)
+                    if (idPaciente == item.Id)
                     {
-                        paciente = item;
+                        pacienteSelecionado.Id = item.Id;
+                        pacienteSelecionado.Nome = item.Nome;
+                        pacienteSelecionado.Telefone = item.Telefone;
+                        pacienteSelecionado.CartaoSus = item.CartaoSus;
                         pacienteExiste = true;
                     }
                 }
@@ -108,8 +112,11 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida
 
         protected override void ExibirLinhaTabela(RequisicoesSaida requisicaoSaida)
         {
-            Console.WriteLine("{0, -10} | {1, -30} | {2, -20} | {3, -20}",
-            requisicaoSaida.Id, requisicaoSaida.dataRequisicaoSaida, requisicaoSaida.paciente, requisicaoSaida.medicamentoRequisicao);
+            if (requisicaoSaida.paciente != null && requisicaoSaida.medicamentoRequisicao != null)
+            {
+                Console.WriteLine("{0, -10} | {1, -30} | {2, -20} | {3, -20}",
+                requisicaoSaida.Id, requisicaoSaida.dataRequisicaoSaida, requisicaoSaida.paciente.Nome, requisicaoSaida.medicamentoRequisicao.Nome);
+            }
         }
     }
 }

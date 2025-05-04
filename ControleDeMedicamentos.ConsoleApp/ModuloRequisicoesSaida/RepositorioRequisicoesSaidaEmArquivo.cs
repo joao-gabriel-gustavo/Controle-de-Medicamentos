@@ -11,7 +11,7 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida
         }
         protected override List<RequisicoesSaida> ObterRegistros()
         {
-            return contexto.requisicoesSaidas;
+            return contexto.requisicoes;
         }
     }
 }
