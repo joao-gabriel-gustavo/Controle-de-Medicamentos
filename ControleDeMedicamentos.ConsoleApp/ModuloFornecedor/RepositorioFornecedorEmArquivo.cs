@@ -15,8 +15,7 @@ public class RepositorioFornecedorEmArquivo : RepositorioBaseEmArquivo<Fornecedo
 
     public bool VerificacaoCNPJ(string CNPJ)
     {
-        List<Fornecedor> fornecedores = new List<Fornecedor>();
-        fornecedores = ObterRegistros();
+        List<Fornecedor> fornecedores = ObterRegistros();
         bool cnpjExiste = false;
 
         foreach( Fornecedor item in fornecedores)

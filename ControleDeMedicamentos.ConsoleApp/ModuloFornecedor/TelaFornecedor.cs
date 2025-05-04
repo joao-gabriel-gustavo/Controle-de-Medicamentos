@@ -1,11 +1,15 @@
 ﻿using ControleDeMedicamentos.ConsoleApp.Compartilhado;
+using ControleDeMedicamentos.ConsoleApp.Util;
 
 namespace ControleDeMedicamentos.ConsoleApp.ModuloFornecedor;
 
 public class TelaFornecedor : TelaBase<Fornecedor>, ITelaCrud
 {
-    public TelaFornecedor(IRepositorioFornecedor repositorio) : base("Fornecedor", repositorio)
+    private IRepositorioFornecedor repositorioFornecedor;
+
+    public TelaFornecedor(IRepositorioFornecedor repositorioFornecedor) : base("Fornecedor", repositorioFornecedor)
     {
+        this.repositorioFornecedor = repositorioFornecedor;
     }
     public override Fornecedor ObterDados()
     {
@@ -16,10 +20,9 @@ public class TelaFornecedor : TelaBase<Fornecedor>, ITelaCrud
         string telefone = Console.ReadLine()!;
 
         ContextoDados contexto = new ContextoDados();
-        RepositorioFornecedorEmArquivo repositorioFornecedor = new RepositorioFornecedorEmArquivo(contexto);
 
         Console.Write("Digite o CNPJ no formato: XX.XXX.XXX/XXX-XX");
-        string cnpj = Console.ReadLine()!;
+        string cnpj = Console.ReadLine()!.Trim()!;
 
         bool cnpjExiste = false;
 
@@ -41,12 +44,12 @@ public class TelaFornecedor : TelaBase<Fornecedor>, ITelaCrud
             return null;
         }
     }
+    
     protected override void ExibirCabecalhoTabela()
     {
         Console.WriteLine("{0, -10} | {1, -30} | {2, -20} | {3, -20}", 
             "Id", "Nome", "Telefone", "CNPJ");
     }
-
     protected override void ExibirLinhaTabela(Fornecedor fornecedor)
     {
         Console.WriteLine("{0, -10} | {1, -30} | {2, -20} | {3, -20}", 
