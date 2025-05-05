@@ -4,7 +4,7 @@ using ControleDeMedicamentos.ConsoleApp.Compartilhado;
 
 namespace ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida
 {
-    public interface IRepositorioRequisicoesSaida : IRepositorio<RequisicoesSaida>
+    public interface IRepositorioRequisicaoSaida : IRepositorio<RequisicaoSaida>
     {
     }
 }

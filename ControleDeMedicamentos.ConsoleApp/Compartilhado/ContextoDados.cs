@@ -1,10 +1,10 @@
 ﻿using System.Text.Json.Serialization;
 using System.Text.Json;
 using ControleDeMedicamentos.ConsoleApp.ModuloFornecedor;
+using ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida;
 using ControleDeMedicamentos.ConsoleApp.ModuloPaciente;
 using ControleDeMedicamentos.ConsoleApp.ModuloMedicamento;
 using ControleDeMedicamentos.ConsoleApp.ModuloFuncionarios;
-using ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida;
 using ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesEntrada;
 
 namespace ControleDeMedicamentos.ConsoleApp.Compartilhado;
@@ -18,7 +18,7 @@ public class ContextoDados
     public List<Paciente> Pacientes { get; set; }
     public List<Medicamento> Medicamentos { get; set; }
     public List<Funcionario> Funcionarios { get; set; }
-    public List<RequisicoesSaida> requisicoes { get; set; }
+    public List<RequisicaoSaida> requisicaoSaida { get; set; }
     public List<RequisicaoEntrada> RequisicoesEntrada { get; set; }
 
     public ContextoDados()
@@ -27,7 +27,7 @@ public class ContextoDados
         Pacientes = new List<Paciente>();
         Medicamentos = new List<Medicamento>();
         Funcionarios = new List<Funcionario>();
-        requisicoes = new List<RequisicoesSaida>();
+        requisicaoSaida = new List<RequisicaoSaida>();
         RequisicoesEntrada = new List<RequisicaoEntrada>();
     }
 
@@ -74,7 +74,7 @@ public class ContextoDados
         Pacientes = contextoArmazenado.Pacientes;
         Medicamentos = contextoArmazenado.Medicamentos;
         Funcionarios = contextoArmazenado.Funcionarios;
-        requisicoes = contextoArmazenado.requisicoes;
+        requisicaoSaida = contextoArmazenado.requisicaoSaida;
         RequisicoesEntrada = contextoArmazenado.RequisicoesEntrada;
     }
 }

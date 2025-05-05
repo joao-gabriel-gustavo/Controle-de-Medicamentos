@@ -28,21 +28,18 @@ public class TelaFornecedor : TelaBase<Fornecedor>, ITelaCrud
 
         cnpjExiste = repositorioFornecedor.VerificacaoCNPJ(cnpj);
 
-        if (!cnpjExiste)
-        {
-            Fornecedor fornecedor = new Fornecedor(nome, telefone, cnpj);
-            return fornecedor;
-        }
 
-        else 
+        if(cnpjExiste)
         {
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine("Este CNPJ ja esta cadastrado no nosso sistema, Aperte ENTER para tentar novamente");
             Console.ReadLine();
             Console.ResetColor();
             ObterDados();
-            return null;
         }
+
+            Fornecedor fornecedor = new Fornecedor(nome, telefone, cnpj);
+            return fornecedor;
     }
     
     protected override void ExibirCabecalhoTabela()
