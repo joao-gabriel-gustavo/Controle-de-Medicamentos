@@ -17,7 +17,7 @@ public class TelaPrincipal
     private TelaPaciente telaPaciente;
     private TelaMedicamento telaMedicamento;
     private TelaFuncionario telaFuncionario;
-    private TelaRequisicoesSaida telaRequisicoesSaida;
+    private TelaRequisicaoSaida telaRequisicoesSaida;
     private TelaRequisicaoEntrada telaRequisicaoEntrada;
 
     public TelaPrincipal()
@@ -35,8 +35,8 @@ public class TelaPrincipal
         IRepositorioFuncionario repositorioFuncionario = new RepositorioFuncionarioEmArquivo(contexto);
         telaFuncionario = new TelaFuncionario(repositorioFuncionario);
 
-        IRepositorioRequisicoesSaida repositorioRequisicoesSaida = new RepositorioRequisicoesSaidaEmArquivo(contexto);
-        telaRequisicoesSaida = new TelaRequisicoesSaida(repositorioRequisicoesSaida, telaPaciente, telaMedicamento, (RepositorioMedicamentoEmArquivo)repositorioMedicamento, (RepositorioPacienteEmArquivo)repositorioPaciente);
+        IRepositorioRequisicaoSaida repositorioRequisicoesSaida = new RepositorioRequisicaoSaidaEmArquivo(contexto);
+        telaRequisicoesSaida = new TelaRequisicaoSaida(repositorioRequisicoesSaida, telaPaciente, telaMedicamento, (RepositorioMedicamentoEmArquivo)repositorioMedicamento, (RepositorioPacienteEmArquivo)repositorioPaciente);
         
         IRepositorioRequisicaoEntrada repositorioRequisicaoEntrada = new RepositorioRequisicaoEntradaEmArquivo(contexto, (RepositorioMedicamentoEmArquivo)repositorioMedicamento);
         telaRequisicaoEntrada = new TelaRequisicaoEntrada(
