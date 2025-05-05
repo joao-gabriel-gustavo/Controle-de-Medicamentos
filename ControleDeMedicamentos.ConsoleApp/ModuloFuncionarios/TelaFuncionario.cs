@@ -4,8 +4,10 @@ using ControleDeMedicamentos.ConsoleApp.ModuloFuncionarios;
 namespace ControleDeMedicamentos.ConsoleApp.ModuloFornecedor;
 public class TelaFuncionario : TelaBase<Funcionario>, ITelaCrud
 {
+    private IRepositorioFuncionario repositorio;
     public TelaFuncionario(IRepositorioFuncionario repositorio) : base("Funcionario", repositorio)
     {
+        this.repositorio = repositorio;
     }
     public override Funcionario ObterDados()
     {
@@ -17,6 +19,17 @@ public class TelaFuncionario : TelaBase<Funcionario>, ITelaCrud
 
         Console.Write("Digite o CPF:");
         string cpf = Console.ReadLine()!;
+
+        bool cpfExiste = repositorio.VerificarCPF(cpf);
+
+        if(cpfExiste)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Este CPF ja esta cadastrado em nosso sistema\nAperte ENTER para tentar novamente");
+            Console.ReadLine();
+            Console.ResetColor();
+            ObterDados();
+        }
 
         Funcionario funcionario = new Funcionario(nome, telefone, cpf);
         return funcionario;
