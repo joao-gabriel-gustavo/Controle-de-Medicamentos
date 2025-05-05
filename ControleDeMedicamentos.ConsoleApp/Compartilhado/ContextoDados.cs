@@ -5,6 +5,7 @@ using ControleDeMedicamentos.ConsoleApp.ModuloPaciente;
 using ControleDeMedicamentos.ConsoleApp.ModuloMedicamento;
 using ControleDeMedicamentos.ConsoleApp.ModuloFuncionarios;
 using ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida;
+using ControleDeMedicamentos.ConsoleApp.ModuloPrescricoesMedicas;
 
 namespace ControleDeMedicamentos.ConsoleApp.Compartilhado;
 
@@ -18,6 +19,7 @@ public class ContextoDados
     public List<Medicamento> Medicamentos { get; set; }
     public List<Funcionario> Funcionarios { get; set; }
     public List<RequisicoesSaida> requisicoes { get; set; }
+    public List<PrescricaoMedica> PrescicoesMedicas { get; internal set; }
 
     public ContextoDados()
     {
