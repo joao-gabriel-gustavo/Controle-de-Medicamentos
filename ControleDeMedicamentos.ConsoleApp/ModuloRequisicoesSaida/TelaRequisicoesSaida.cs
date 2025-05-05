@@ -29,6 +29,7 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida
 
             Console.WriteLine("Digite a data que esta sendo feito essa requisicao da seguinta maneira: (DD/MM/YYY)");
             DateTime dataRequisicaoSaida = Convert.ToDateTime(Console.ReadLine());
+            
 
             telaPaciente.VisualizarRegistros(false);
             Console.WriteLine("Digite o id do paciente que esta sendo feito a requisição");
@@ -39,22 +40,21 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida
 
             Console.WriteLine("Digite o id que do medicamento que esta sendo feito a requisição");
             int idMedicamento = Convert.ToInt32(Console.ReadLine());
-            bool medicamentoExiste = VerificarIdMedicamentoEQuantidade(idMedicamento, default);
 
-            if (medicamentoExiste)
-            {
-                Console.WriteLine("Digite a quantidade do medicamento que esta saindo");
-                int quantidadeMedicamento = Convert.ToInt32(Console.ReadLine());
-                VerificarIdMedicamentoEQuantidade(default, quantidadeMedicamento);
-            }
+            
 
-                RequisicoesSaida requisicaoSaida = new RequisicoesSaida();
+            Console.WriteLine("Digite a quantidade do medicamento que esta saindo");
+            int quantidadeMedicamento = Convert.ToInt32(Console.ReadLine());
+
+            bool medicamentoExiste = VerificarIdMedicamentoEQuantidade(idMedicamento,  quantidadeMedicamento);
+
+
+            RequisicoesSaida requisicaoSaida = new RequisicoesSaida();
                 requisicaoSaida.dataRequisicaoSaida = dataRequisicaoSaida;
                 requisicaoSaida.paciente = pacienteSelecionado;
                 requisicaoSaida.medicamentoRequisicao = medicamentoSelecionado;
                 return requisicaoSaida;
         }
-
         private bool VerificarIdMedicamentoEQuantidade(int idMedicamento, int quantidadeMedicamentos)
         {
             bool medicamentoExiste = false;
@@ -79,7 +79,6 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida
             }
             return medicamentoExiste;
         }
-
         private bool VerificarIdPaciente(int idPaciente)
         {
             bool pacienteExiste = false;
@@ -103,13 +102,11 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida
             return pacienteExiste;
 
         }
-
         protected override void ExibirCabecalhoTabela()
         {
             Console.WriteLine("{0, -10} | {1, -30} | {2, -20} | {3, -20}",
             "Id", "Data", "Paciente", "Medicamento");
         }
-
         protected override void ExibirLinhaTabela(RequisicoesSaida requisicaoSaida)
         {
             if (requisicaoSaida.paciente != null && requisicaoSaida.medicamentoRequisicao != null)
