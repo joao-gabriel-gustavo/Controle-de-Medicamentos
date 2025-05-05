@@ -17,7 +17,7 @@ public class ContextoDados
     public List<Paciente> Pacientes { get; set; }
     public List<Medicamento> Medicamentos { get; set; }
     public List<Funcionario> Funcionarios { get; set; }
-    public List<RequisicoesSaida> requisicoes { get; set; }
+    public List<RequisicaoSaida> requisicoes { get; set; }
 
     public ContextoDados()
     {
@@ -25,7 +25,7 @@ public class ContextoDados
         Pacientes = new List<Paciente>();
         Medicamentos = new List<Medicamento>();
         Funcionarios = new List<Funcionario>();
-        requisicoes = new List<RequisicoesSaida>();
+        requisicoes = new List<RequisicaoSaida>();
     }
 
     public ContextoDados(bool carregarDados) : this()
