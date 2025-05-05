@@ -4,6 +4,7 @@ using ControleDeMedicamentos.ConsoleApp.ModuloFuncionarios;
 using ControleDeMedicamentos.ConsoleApp.ModuloPaciente;
 using ControleDeMedicamentos.ConsoleApp.ModuloMedicamento;
 using ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida;
+using ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesEntrada;
 
 namespace ControleDeMedicamentos.ConsoleApp.Util;
 
@@ -17,6 +18,7 @@ public class TelaPrincipal
     private TelaMedicamento telaMedicamento;
     private TelaFuncionario telaFuncionario;
     private TelaRequisicoesSaida telaRequisicoesSaida;
+    private TelaRequisicaoEntrada telaRequisicaoEntrada;
 
     public TelaPrincipal()
     {
@@ -33,9 +35,16 @@ public class TelaPrincipal
         IRepositorioFuncionario repositorioFuncionario = new RepositorioFuncionarioEmArquivo(contexto);
         telaFuncionario = new TelaFuncionario(repositorioFuncionario);
 
-      
         IRepositorioRequisicoesSaida repositorioRequisicoesSaida = new RepositorioRequisicoesSaidaEmArquivo(contexto);
         telaRequisicoesSaida = new TelaRequisicoesSaida(repositorioRequisicoesSaida, telaPaciente, telaMedicamento, (RepositorioMedicamentoEmArquivo)repositorioMedicamento, (RepositorioPacienteEmArquivo)repositorioPaciente);
+        
+        IRepositorioRequisicaoEntrada repositorioRequisicaoEntrada = new RepositorioRequisicaoEntradaEmArquivo(contexto, (RepositorioMedicamentoEmArquivo)repositorioMedicamento);
+        telaRequisicaoEntrada = new TelaRequisicaoEntrada(
+            repositorioRequisicaoEntrada,
+            telaMedicamento,
+            telaFuncionario,
+            repositorioMedicamento,
+            repositorioFuncionario);
     }
 
     public void ApresentarMenuPrincipal()
@@ -53,6 +62,7 @@ public class TelaPrincipal
         Console.WriteLine("3 - Controle de Medicamentos");
         Console.WriteLine("4 - Controle de Funcionarios");
         Console.WriteLine("5 - Controle de Requisições de Saida");
+        Console.WriteLine("6 - Controle de Requisições de Entrada");
         Console.WriteLine("S - Sair");
 
         Console.WriteLine();
@@ -77,11 +87,11 @@ public class TelaPrincipal
 
         if (opcaoPrincipal == '5')
             return telaRequisicoesSaida;
+            
+        if (opcaoPrincipal == '6')
+            return telaRequisicaoEntrada;
 
         else
             return null;
-
     }
-
-
 }
