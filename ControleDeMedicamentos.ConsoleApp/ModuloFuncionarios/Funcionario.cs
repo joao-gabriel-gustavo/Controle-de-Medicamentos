@@ -39,7 +39,10 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloFuncionarios
                 erros += "O campo 'Telefone' é deve seguir o padrão (DDD) 0000-0000 ou (DDD) 00000-0000.\n";
 
             if (string.IsNullOrEmpty(CPF))
-                erros += "O campo CNPJ é obrigatório.\n";
+                erros += "O campo CPF é obrigatório.\n";
+
+            if (CPF.Length < 11 || CPF.Length > 11)
+                erros += "O campo CPF deve conter 11 digitos.\n";
 
             return erros;
         }

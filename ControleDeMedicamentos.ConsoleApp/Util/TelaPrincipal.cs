@@ -5,6 +5,7 @@ using ControleDeMedicamentos.ConsoleApp.ModuloPaciente;
 using ControleDeMedicamentos.ConsoleApp.ModuloMedicamento;
 using ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida;
 using ControleDeMedicamentos.ConsoleApp.ModuloPrescricoesMedicas;
+using ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesEntrada;
 
 namespace ControleDeMedicamentos.ConsoleApp.Util;
 
@@ -17,6 +18,8 @@ public class TelaPrincipal
     private TelaPaciente telaPaciente;
     private TelaMedicamento telaMedicamento;
     private TelaFuncionario telaFuncionario;
+    private TelaRequisicaoSaida telaRequisicoesSaida;
+    private TelaRequisicaoEntrada telaRequisicaoEntrada;
     private TelaPrescricaoMedica telaPrescricaoMedica;
     private TelaRequisicoesSaida telaRequisicoesSaida;
 
@@ -35,6 +38,16 @@ public class TelaPrincipal
         IRepositorioFuncionario repositorioFuncionario = new RepositorioFuncionarioEmArquivo(contexto);
         telaFuncionario = new TelaFuncionario(repositorioFuncionario);
 
+        IRepositorioRequisicaoSaida repositorioRequisicoesSaida = new RepositorioRequisicaoSaidaEmArquivo(contexto);
+        telaRequisicoesSaida = new TelaRequisicaoSaida(repositorioRequisicoesSaida, telaPaciente, telaMedicamento, (RepositorioMedicamentoEmArquivo)repositorioMedicamento, (RepositorioPacienteEmArquivo)repositorioPaciente);
+        
+        IRepositorioRequisicaoEntrada repositorioRequisicaoEntrada = new RepositorioRequisicaoEntradaEmArquivo(contexto, (RepositorioMedicamentoEmArquivo)repositorioMedicamento);
+        telaRequisicaoEntrada = new TelaRequisicaoEntrada(
+            repositorioRequisicaoEntrada,
+            telaMedicamento,
+            telaFuncionario,
+            repositorioMedicamento,
+            repositorioFuncionario);
         IRepositorioPrescricaoMedica repositorioPrescricaoMedica = new RepositorioPrescricaoMedicaEmArquivo(contexto);
         telaPrescricaoMedica = new TelaPrescricaoMedica(repositorioPrescricaoMedica);
 
@@ -57,6 +70,7 @@ public class TelaPrincipal
         Console.WriteLine("3 - Controle de Medicamentos");
         Console.WriteLine("4 - Controle de Funcionarios");
         Console.WriteLine("5 - Controle de Requisições de Saida");
+        Console.WriteLine("6 - Controle de Requisições de Entrada");
         Console.WriteLine("S - Sair");
 
         Console.WriteLine();
@@ -81,11 +95,11 @@ public class TelaPrincipal
 
         if (opcaoPrincipal == '5')
             return telaRequisicoesSaida;
+            
+        if (opcaoPrincipal == '6')
+            return telaRequisicaoEntrada;
 
         else
             return null;
-
     }
-
-
 }

@@ -6,5 +6,6 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloFuncionarios
 {
     public interface IRepositorioFuncionario : IRepositorio<Funcionario>
     {
+        public bool VerificarCPF(string cpf);
     }
 }
