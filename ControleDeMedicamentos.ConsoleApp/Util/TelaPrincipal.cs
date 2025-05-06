@@ -26,13 +26,15 @@ public class TelaPrincipal
     {
         contexto = new ContextoDados(true);
         IRepositorioFornecedor repositorioFornecedor = new RepositorioFornecedorEmArquivo(contexto);
-        telaFornecedor = new TelaFornecedor(repositorioFornecedor);
+      
 
         IRepositorioPaciente repositorioPaciente = new RepositorioPacienteEmArquivo(contexto);
         telaPaciente = new TelaPaciente(repositorioPaciente);
         
         IRepositorioMedicamento repositorioMedicamento = new RepositorioMedicamentoEmArquivo(contexto);
         telaMedicamento = new TelaMedicamento(repositorioMedicamento, repositorioFornecedor, telaFornecedor);
+
+        telaFornecedor = new TelaFornecedor(repositorioFornecedor, repositorioMedicamento);
 
         IRepositorioFuncionario repositorioFuncionario = new RepositorioFuncionarioEmArquivo(contexto);
         telaFuncionario = new TelaFuncionario(repositorioFuncionario);
