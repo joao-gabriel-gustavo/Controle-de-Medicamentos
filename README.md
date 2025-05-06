@@ -1,5 +1,7 @@
 # Controle de Medicamentos
 
+![Gif](https://i.imgur.com/z0RgxW3.gif)
+
 ## Introdução
 
 O Sistema de Controle de Medicamentos é uma aplicação de console desenvolvida para gerenciar o estoque de medicamentos em instituições de saúde. O aplicativo permite o controle completo do fluxo de medicamentos, desde o cadastro de fornecedores, medicamentos e pacientes, até as requisições de entrada e saída de medicamentos.
