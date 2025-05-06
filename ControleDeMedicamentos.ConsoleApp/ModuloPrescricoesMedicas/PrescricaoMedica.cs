@@ -1,4 +1,5 @@
 ﻿using ControleDeMedicamentos.ConsoleApp.Compartilhado;
+using ControleDeMedicamentos.ConsoleApp.ModuloMedicamento;
 using ControleDeMedicamentos.ConsoleApp.ModuloPaciente;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,8 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloPrescricoesMedicas
     {
         public string CRM { get; set; }
         public DateTime DataPrescricao { get; set; }
-        public PrescricaoMedica(string crm, DateTime dataPrescricao)
+
+        public PrescricaoMedica(string crm, DateTime dataPrescricao,  List<Medicamento> medicamentos)
         {
             CRM = crm;
             DataPrescricao = dataPrescricao;

@@ -7,9 +7,8 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloPrescricoesMedicas
     public class TelaPrescricaoMedica : TelaBase<PrescricaoMedica>, ITelaCrud
     {
         private IRepositorioPrescricaoMedica repositorioPrescricao;
-
-        public IRepositorioMedicamento repositorioMedicamento;
-
+        public  IRepositorioMedicamento repositorioMedicamento;
+     
         public TelaPrescricaoMedica(IRepositorioPrescricaoMedica repositorio, IRepositorioMedicamento repositorioMedicamento) : base("Prescrição Médica", repositorio)
         {
             this.repositorioMedicamento = repositorioMedicamento;
@@ -69,6 +68,8 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloPrescricoesMedicas
                     Console.Write("Data inválida. Digite novamente (dd/mm/yyyy): ");
                 }
 
+                
+                Console.WriteLine("Digite");
                 PrescricaoMedica PrescricaoMedica = new PrescricaoMedica(CRM, dataPrescricao);
 
                 return PrescricaoMedica;
