@@ -20,7 +20,7 @@ public class TelaPrincipal
     private TelaFuncionario telaFuncionario;
     private TelaPrescricaoMedica telaPrescricaoMedica;
     private TelaRequisicaoEntrada telaRequisicaoEntrada;
-    private TelaRequisicoesSaida telaRequisicoesSaida;
+    private TelaRequisicaoSaida telaRequisicoesSaida;
 
     public TelaPrincipal()
     {
@@ -48,8 +48,8 @@ public class TelaPrincipal
             repositorioMedicamento,
             repositorioFuncionario);
 
-        IRepositorioRequisicoesSaida repositorioRequisicoesSaida = new RepositorioRequisicoesSaidaEmArquivo(contexto);
-        telaRequisicoesSaida = new TelaRequisicoesSaida(repositorioRequisicoesSaida, telaPaciente, telaMedicamento, (RepositorioMedicamentoEmArquivo)repositorioMedicamento, (RepositorioPacienteEmArquivo)repositorioPaciente);
+        IRepositorioRequisicaoSaida repositorioRequisicoesSaida = new RepositorioRequisicaoSaidaEmArquivo(contexto);
+        telaRequisicoesSaida = new TelaRequisicaoSaida(repositorioRequisicoesSaida, telaPaciente, telaMedicamento, telaPrescricaoMedica, (RepositorioMedicamentoEmArquivo)repositorioMedicamento, (RepositorioPacienteEmArquivo)repositorioPaciente, (RepositorioPrescricaoMedicaEmArquivo)repositorioPrescricaoMedica;
     }
 
     public void ApresentarMenuPrincipal()
