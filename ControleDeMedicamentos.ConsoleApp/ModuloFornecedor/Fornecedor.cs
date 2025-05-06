@@ -44,7 +44,7 @@ public class Fornecedor : EntidadeBase<Fornecedor>
             erros += "O campo CNPJ é obrigatório.\n";
 
         if (CNPJ.Length < 18 || CNPJ.Length > 18)
-            erros += "O campo CNPJ deve seguir o formato: XX.XXX.XXX/XXX-XX"; 
+            erros += "O campo CNPJ deve seguir o formato: XX.XXX.XXX/XXXX-XX"; 
 
         return erros.Trim();
     }
