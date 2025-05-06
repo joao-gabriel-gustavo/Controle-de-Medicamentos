@@ -16,7 +16,7 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloPrescricoesMedicas
 
         protected override List<PrescricaoMedica> ObterRegistros()
         {
-            return contexto.PrescicoesMedicas;
+            return contexto.PrescricoesMedicas;
         }
     }
 }
