@@ -1,6 +1,6 @@
 # Controle de Medicamentos
 
-![Gif](https://i.imgur.com/z0RgxW3.gif)
+![Gif](https://i.imgur.com/9hIVPlg.gif)
 
 ## Introdução
 
