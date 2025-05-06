@@ -73,10 +73,8 @@ public class TelaMedicamento : TelaBase<Medicamento>, ITelaCrud
 
         Console.WriteLine();
 
-        // Verificar se o medicamento possui requisições vinculadas
         bool podeSerExcluido = true;
         
-        // Verificar requisições de entrada
         List<RequisicaoEntrada> requisicoesEntrada = repositorioRequisicaoEntrada.SelecionarRegistros();
         foreach (RequisicaoEntrada requisicao in requisicoesEntrada)
         {
@@ -91,7 +89,6 @@ public class TelaMedicamento : TelaBase<Medicamento>, ITelaCrud
             }
         }
 
-        // Verificar requisições de saída se ainda não encontrou incompatibilidade
         if (podeSerExcluido)
         {
             List<RequisicaoSaida> requisicoesSaida = repositorioRequisicaoSaida.SelecionarRegistros();
@@ -118,7 +115,7 @@ public class TelaMedicamento : TelaBase<Medicamento>, ITelaCrud
 
         if (!conseguiuExcluir)
         {
-            Notificador.ExibirMensagem("Houve um erro durante a exclusão do registro...", ConsoleColor.Red);
+            Notificador.ExibirMensagem("Houve um erro durante a exclusão do registro... Por favor, tente novamente.", ConsoleColor.Red);
             return;
         }
 

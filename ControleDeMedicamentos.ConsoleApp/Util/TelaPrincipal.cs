@@ -26,7 +26,6 @@ public class TelaPrincipal
     {
         contexto = new ContextoDados(true);
         
-        // Inicializar repositórios
         IRepositorioFornecedor repositorioFornecedor = new RepositorioFornecedorEmArquivo(contexto);
         IRepositorioPaciente repositorioPaciente = new RepositorioPacienteEmArquivo(contexto);
         IRepositorioMedicamento repositorioMedicamento = new RepositorioMedicamentoEmArquivo(contexto);
@@ -34,14 +33,12 @@ public class TelaPrincipal
         IRepositorioPrescricaoMedica repositorioPrescricaoMedica = new RepositorioPrescricaoMedicaEmArquivo(contexto);
         IRepositorioRequisicaoEntrada repositorioRequisicaoEntrada = new RepositorioRequisicaoEntradaEmArquivo(contexto, (RepositorioMedicamentoEmArquivo)repositorioMedicamento);
         IRepositorioRequisicaoSaida repositorioRequisicoesSaida = new RepositorioRequisicaoSaidaEmArquivo(contexto);
-        
-        // Inicializar telas em ordem adequada
+       
         telaPaciente = new TelaPaciente(repositorioPaciente);
         telaFornecedor = new TelaFornecedor(repositorioFornecedor, repositorioMedicamento);
         telaFuncionario = new TelaFuncionario(repositorioFuncionario);
         telaPrescricaoMedica = new TelaPrescricaoMedica(repositorioPrescricaoMedica, repositorioMedicamento);
-        
-        // Inicializar TelaMedicamento com todos os repositórios necessários
+       
         telaMedicamento = new TelaMedicamento(
             repositorioMedicamento, 
             repositorioFornecedor, 
@@ -49,7 +46,6 @@ public class TelaPrincipal
             repositorioRequisicaoEntrada,
             repositorioRequisicoesSaida);
         
-        // Inicializar telas de requisição que dependem de TelaMedicamento
         telaRequisicaoEntrada = new TelaRequisicaoEntrada(
             repositorioRequisicaoEntrada,
             telaMedicamento,
