@@ -1,6 +1,8 @@
 using ControleDeMedicamentos.ConsoleApp.Compartilhado;
 using ControleDeMedicamentos.ConsoleApp.ModuloFornecedor;
 using ControleDeMedicamentos.ConsoleApp.Util;
+using ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesEntrada;
+using ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida;
 
 namespace ControleDeMedicamentos.ConsoleApp.ModuloMedicamento;
 
@@ -9,13 +11,22 @@ public class TelaMedicamento : TelaBase<Medicamento>, ITelaCrud
     private IRepositorioMedicamento repositorioMedicamento;
     private IRepositorioFornecedor repositorioFornecedor;
     private TelaFornecedor telaFornecedor;
+    private IRepositorioRequisicaoEntrada repositorioRequisicaoEntrada;
+    private IRepositorioRequisicaoSaida repositorioRequisicaoSaida;
 
-    public TelaMedicamento(IRepositorioMedicamento repositorio, IRepositorioFornecedor repositorioFornecedor, TelaFornecedor telaFornecedor) 
+    public TelaMedicamento(
+        IRepositorioMedicamento repositorio, 
+        IRepositorioFornecedor repositorioFornecedor, 
+        TelaFornecedor telaFornecedor,
+        IRepositorioRequisicaoEntrada repositorioRequisicaoEntrada,
+        IRepositorioRequisicaoSaida repositorioRequisicaoSaida) 
         : base("Medicamento", repositorio)
     {
         this.repositorioMedicamento = repositorio;
         this.repositorioFornecedor = repositorioFornecedor;
         this.telaFornecedor = telaFornecedor;
+        this.repositorioRequisicaoEntrada = repositorioRequisicaoEntrada;
+        this.repositorioRequisicaoSaida = repositorioRequisicaoSaida;
     }
 
     public override Medicamento ObterDados()
@@ -44,6 +55,71 @@ public class TelaMedicamento : TelaBase<Medicamento>, ITelaCrud
         Medicamento medicamento = new Medicamento(nome, descricao, quantidadeEmEstoque, fornecedor);
 
         return medicamento;
+    }
+
+    public override void ExcluirRegistro()
+    {
+        ExibirCabecalho();
+
+        Console.WriteLine($"Excluindo {nomeEntidade}...");
+        Console.WriteLine("----------------------------------------");
+
+        Console.WriteLine();
+
+        VisualizarRegistros(false);
+
+        Console.Write("Digite o ID do registro que deseja selecionar: ");
+        int idRegistro = Convert.ToInt32(Console.ReadLine());
+
+        Console.WriteLine();
+
+        bool podeSerExcluido = true;
+        
+        List<RequisicaoEntrada> requisicoesEntrada = repositorioRequisicaoEntrada.SelecionarRegistros();
+        foreach (RequisicaoEntrada requisicao in requisicoesEntrada)
+        {
+            if (requisicao.Medicamento != null && requisicao.Medicamento.Id == idRegistro)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("Este medicamento possui requisições de entrada vinculadas e não pode ser excluído\nAperte ENTER para continuar");
+                Console.ReadLine();
+                Console.ResetColor();
+                podeSerExcluido = false;
+                break;
+            }
+        }
+
+        if (podeSerExcluido)
+        {
+            List<RequisicaoSaida> requisicoesSaida = repositorioRequisicaoSaida.SelecionarRegistros();
+            foreach (RequisicaoSaida requisicao in requisicoesSaida)
+            {
+                if (requisicao.medicamento != null && requisicao.medicamento.Id == idRegistro)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("Este medicamento possui requisições de saída vinculadas e não pode ser excluído\nAperte ENTER para continuar");
+                    Console.ReadLine();
+                    Console.ResetColor();
+                    podeSerExcluido = false;
+                    break;
+                }
+            }
+        }
+
+        bool conseguiuExcluir = false;
+
+        if (podeSerExcluido)
+        {
+            conseguiuExcluir = repositorio.ExcluirRegistro(idRegistro);
+        }
+
+        if (!conseguiuExcluir)
+        {
+            Notificador.ExibirMensagem("Houve um erro durante a exclusão do registro... Por favor, tente novamente.", ConsoleColor.Red);
+            return;
+        }
+
+        Notificador.ExibirMensagem("O registro foi excluído com sucesso!", ConsoleColor.Green);
     }
 
     public override char ApresentarMenu()

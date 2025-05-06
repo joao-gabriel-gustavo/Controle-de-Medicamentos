@@ -25,24 +25,27 @@ public class TelaPrincipal
     public TelaPrincipal()
     {
         contexto = new ContextoDados(true);
-        IRepositorioFornecedor repositorioFornecedor = new RepositorioFornecedorEmArquivo(contexto);
-      
-
-        IRepositorioPaciente repositorioPaciente = new RepositorioPacienteEmArquivo(contexto);
-        telaPaciente = new TelaPaciente(repositorioPaciente);
         
+        IRepositorioFornecedor repositorioFornecedor = new RepositorioFornecedorEmArquivo(contexto);
+        IRepositorioPaciente repositorioPaciente = new RepositorioPacienteEmArquivo(contexto);
         IRepositorioMedicamento repositorioMedicamento = new RepositorioMedicamentoEmArquivo(contexto);
-        telaMedicamento = new TelaMedicamento(repositorioMedicamento, repositorioFornecedor, telaFornecedor);
-
-        telaFornecedor = new TelaFornecedor(repositorioFornecedor, repositorioMedicamento);
-
         IRepositorioFuncionario repositorioFuncionario = new RepositorioFuncionarioEmArquivo(contexto);
-        telaFuncionario = new TelaFuncionario(repositorioFuncionario);
-
         IRepositorioPrescricaoMedica repositorioPrescricaoMedica = new RepositorioPrescricaoMedicaEmArquivo(contexto);
-        telaPrescricaoMedica = new TelaPrescricaoMedica(repositorioPrescricaoMedica, repositorioMedicamento);
-
         IRepositorioRequisicaoEntrada repositorioRequisicaoEntrada = new RepositorioRequisicaoEntradaEmArquivo(contexto, (RepositorioMedicamentoEmArquivo)repositorioMedicamento);
+        IRepositorioRequisicaoSaida repositorioRequisicoesSaida = new RepositorioRequisicaoSaidaEmArquivo(contexto);
+       
+        telaPaciente = new TelaPaciente(repositorioPaciente);
+        telaFornecedor = new TelaFornecedor(repositorioFornecedor, repositorioMedicamento);
+        telaFuncionario = new TelaFuncionario(repositorioFuncionario);
+        telaPrescricaoMedica = new TelaPrescricaoMedica(repositorioPrescricaoMedica, repositorioMedicamento);
+       
+        telaMedicamento = new TelaMedicamento(
+            repositorioMedicamento, 
+            repositorioFornecedor, 
+            telaFornecedor,
+            repositorioRequisicaoEntrada,
+            repositorioRequisicoesSaida);
+        
         telaRequisicaoEntrada = new TelaRequisicaoEntrada(
             repositorioRequisicaoEntrada,
             telaMedicamento,
@@ -50,8 +53,14 @@ public class TelaPrincipal
             repositorioMedicamento,
             repositorioFuncionario);
 
-        IRepositorioRequisicaoSaida repositorioRequisicoesSaida = new RepositorioRequisicaoSaidaEmArquivo(contexto);
-        telaRequisicoesSaida = new TelaRequisicaoSaida(repositorioRequisicoesSaida, telaPaciente, telaMedicamento, telaPrescricaoMedica, (RepositorioMedicamentoEmArquivo)repositorioMedicamento, (RepositorioPacienteEmArquivo)repositorioPaciente, (RepositorioPrescricaoMedicaEmArquivo)repositorioPrescricaoMedica);
+        telaRequisicoesSaida = new TelaRequisicaoSaida(
+            repositorioRequisicoesSaida, 
+            telaPaciente, 
+            telaMedicamento, 
+            telaPrescricaoMedica, 
+            (RepositorioMedicamentoEmArquivo)repositorioMedicamento, 
+            (RepositorioPacienteEmArquivo)repositorioPaciente, 
+            (RepositorioPrescricaoMedicaEmArquivo)repositorioPrescricaoMedica);
     }
 
     public void ApresentarMenuPrincipal()
