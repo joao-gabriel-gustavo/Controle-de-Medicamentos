@@ -7,8 +7,7 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloPrescricoesMedicas
     public class TelaPrescricaoMedica : TelaBase<PrescricaoMedica>, ITelaCrud
     {
         private IRepositorioPrescricaoMedica repositorioPrescricao;
-        public  IRepositorioMedicamento repositorioMedicamento;
-     
+        public IRepositorioMedicamento repositorioMedicamento;
         public TelaPrescricaoMedica(IRepositorioPrescricaoMedica repositorio, IRepositorioMedicamento repositorioMedicamento) : base("Prescrição Médica", repositorio)
         {
             this.repositorioMedicamento = repositorioMedicamento;
