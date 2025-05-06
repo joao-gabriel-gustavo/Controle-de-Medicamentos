@@ -21,7 +21,7 @@ public class TelaFornecedor : TelaBase<Fornecedor>, ITelaCrud
 
         ContextoDados contexto = new ContextoDados();
 
-        Console.Write("Digite o CNPJ no formato: XX.XXX.XXX/XXX-XX");
+        Console.Write("Digite o CNPJ no formato: XX.XXX.XXX/XXXX-XX");
         string cnpj = Console.ReadLine()!;
 
         bool cnpjExiste = false;
