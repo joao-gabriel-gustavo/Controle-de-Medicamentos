@@ -17,7 +17,7 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida
         public RepositorioMedicamentoEmArquivo repositorioMedicamento;
         public RepositorioPacienteEmArquivo repositorioPaciente;
         public RepositorioPrescricaoMedicaEmArquivo repositorioPrescricaoMedica;
-
+        private IRepositorioRequisicaoSaida repositorioRequisicaoSaida;
         public TelaRequisicaoSaida(IRepositorioRequisicaoSaida repositorio, TelaPaciente telaPaciente, TelaMedicamento telaMedicamento, TelaPrescricaoMedica telaPrescricaoMedica, RepositorioMedicamentoEmArquivo repositorioMedicamento, RepositorioPacienteEmArquivo repositorioPaciente, RepositorioPrescricaoMedicaEmArquivo repositorioPrescricaoMedica) : base("Requisicoes de Saida", repositorio)
         {
             this.telaMedicamento = telaMedicamento;
@@ -26,8 +26,27 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida
             this.repositorioPaciente = repositorioPaciente;
             this.telaPrescricaoMedica = telaPrescricaoMedica;
             this.repositorioPrescricaoMedica = repositorioPrescricaoMedica;
+            repositorioRequisicaoSaida = repositorio;
         }
 
+        public override char ApresentarMenu()
+        {
+            ExibirCabecalho();
+
+            Console.WriteLine();
+
+            Console.WriteLine($"1 - Cadastrar Requisição de Saida");
+            Console.WriteLine($"2 - Editar Requisição de Saida");
+            Console.WriteLine($"3 - Excluir Requisição de Saida");
+            Console.WriteLine($"4 - Visualizar Requisições de Saida");
+            Console.WriteLine($"5 - Visualizar Requisição de Saida por Paciente Especifico");
+            Console.WriteLine("S - Voltar");
+            Console.WriteLine();
+            Console.Write("Escolha uma das opções: ");
+            char operacaoEscolhida = Convert.ToChar(Console.ReadLine()!);
+
+            return operacaoEscolhida;
+        }
         public override void CadastrarRegistro()
         {
             ExibirCabecalho();
@@ -156,8 +175,45 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida
         public void  VisualizarRequisicaoPacienteEspecifico()
         {
             telaPaciente.VisualizarRegistros(false);
+           
+            Console.WriteLine("Digite qual o id do paciente que deseja visualizar as requisições de saida");
+            int idPacienteEspecifico = Convert.ToInt32(Console.ReadLine());
+            bool requisicaoExiste = false;
 
-            Console.WriteLine("Digite qual ");
+            Paciente pacienteEspecifico = repositorioPaciente.SelecionarRegistroPorId(idPacienteEspecifico);
+
+            if(pacienteEspecifico == null)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("Id invalido, Aperte ENTER para tentar novamente");
+                Console.ReadLine();
+                Console.ResetColor();
+                VisualizarRequisicaoPacienteEspecifico();
+            }
+            
+            List<RequisicaoSaida> requisicoesSaidas = repositorioRequisicaoSaida.SelecionarRegistros();
+
+            foreach(RequisicaoSaida requisicao in repositorioRequisicaoSaida.SelecionarRegistros())
+            {
+                if(requisicao.paciente.Nome == pacienteEspecifico.Nome)
+                {
+                    Console.WriteLine("{0, -10} | {1, -20} | {2, -30} | {3, -30}",
+                    "Id", "Data",  "Medicamento", "Prescrição Medica ID}");
+
+                    Console.WriteLine("{0, -10} | {1, -20} | {2, -30} | {3, -30}",
+                    requisicao.Id, requisicao.dataRequisicaoSaida.ToShortDateString(), requisicao.medicamento.Nome, requisicao.prescricaoMedica.Id);
+                    requisicaoExiste = true;
+                    Console.ReadLine();
+                }
+            }
+
+            if(requisicaoExiste == false)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("Esse paciente não possui requisições de saida");
+                Console.ReadLine();
+                Console.ResetColor();
+            }
         }
         protected override void ExibirCabecalhoTabela()
         {

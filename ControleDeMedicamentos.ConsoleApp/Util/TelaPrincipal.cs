@@ -11,7 +11,7 @@ namespace ControleDeMedicamentos.ConsoleApp.Util;
 
 public class TelaPrincipal
 {
-    private char opcaoPrincipal;
+    public char opcaoPrincipal;
 
     private ContextoDados contexto;
     private TelaFornecedor telaFornecedor;

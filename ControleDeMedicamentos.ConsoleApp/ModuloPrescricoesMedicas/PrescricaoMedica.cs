@@ -26,7 +26,8 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloPrescricoesMedicas
 
         public override string Validar()
         {
-            throw new NotImplementedException();
+            string erros = "";
+            return erros;
         }
     }
 }

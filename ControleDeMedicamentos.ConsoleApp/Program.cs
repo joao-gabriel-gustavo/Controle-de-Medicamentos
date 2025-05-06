@@ -1,5 +1,6 @@
 ﻿using ControleDeMedicamentos.ConsoleApp.Compartilhado;
 using ControleDeMedicamentos.ConsoleApp.ModuloMedicamento;
+using ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida;
 using ControleDeMedicamentos.ConsoleApp.Util;
 
 namespace ControleDeMedicamentos.ConsoleApp
@@ -8,7 +9,6 @@ namespace ControleDeMedicamentos.ConsoleApp
     {
         static void Main(string[] args)
         {
-            // boilerplate
             TelaPrincipal telaPrincipal = new TelaPrincipal();
 
             while (true)
@@ -16,15 +16,21 @@ namespace ControleDeMedicamentos.ConsoleApp
                 telaPrincipal.ApresentarMenuPrincipal();
 
                 ITelaCrud telaSelecionada = telaPrincipal.ObterTela();
-                
-                // Funcionou mas não sei se é o ideal
+
                 if (telaSelecionada == null)
                     break;
 
-                char opcaoEscolhida = telaSelecionada.ApresentarMenu();
+                 char opcaoEscolhida = telaSelecionada.ApresentarMenu();
 
                 if (opcaoEscolhida == 'S')
                     break;
+
+                if(telaSelecionada is TelaRequisicaoSaida)
+                {
+                    TelaRequisicaoSaida telaRequisicaoSaida = (TelaRequisicaoSaida)telaSelecionada;
+                    if(opcaoEscolhida == '5')
+                        telaRequisicaoSaida.VisualizarRequisicaoPacienteEspecifico();
+                }
 
                 switch (opcaoEscolhida)
                 {
