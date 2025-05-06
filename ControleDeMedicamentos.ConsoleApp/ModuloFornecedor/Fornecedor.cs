@@ -34,11 +34,13 @@ public class Fornecedor : EntidadeBase<Fornecedor>
         if (Nome.Length < 3 || Nome.Length > 30)
             erros += "O campo Nome deve ter ao menos 3 caracteres e nao pode passar de 30 caracteres.\n";
 
-        if (string.IsNullOrEmpty(Telefone))
-            erros += "O campo Telefone é obrigatório.\n";
+        if (string.IsNullOrWhiteSpace(Telefone))
+            erros += "O campo 'Telefone' é obrigatório.\n";
 
-        if (!Regex.IsMatch(Telefone, @"^\(?\d{2}\)?\s?(9\d{4}|\d{4})-?\d{4}$"))
-                erros += "O campo 'Telefone' é deve seguir o padrão (DDD) 0000-0000 ou (DDD) 00000-0000.\n";
+        else if (!Regex.IsMatch(Telefone, @"^\(\d{2}\)\s\d{4,5}-\d{4}$") &&
+                !Regex.IsMatch(Telefone, @"^\(\d{2}\)\s\d{8,9}$") &&
+                !Regex.IsMatch(Telefone, @"^\d{10,11}$"))
+            erros += "O campo 'Telefone' deve seguir um dos formatos: (XX) XXXX-XXXX ou (XX) XXXXX-XXXX ou apenas os numeros com o DD de dois digitos sem formatação.\n";
 
         if (string.IsNullOrEmpty(CNPJ))
             erros += "O campo CNPJ é obrigatório.\n";

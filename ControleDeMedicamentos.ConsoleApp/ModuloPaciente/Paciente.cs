@@ -41,7 +41,7 @@ public class Paciente : EntidadeBase<Paciente>
         else if (!Regex.IsMatch(Telefone, @"^\(\d{2}\)\s\d{4,5}-\d{4}$") && 
                 !Regex.IsMatch(Telefone, @"^\(\d{2}\)\s\d{8,9}$") && 
                 !Regex.IsMatch(Telefone, @"^\d{10,11}$"))
-            erros += "O campo 'Telefone' deve seguir um dos formatos: (XX) XXXX-XXXX ou (XX) XXXXX-XXXX.\n";
+            erros += "O campo 'Telefone' deve seguir um dos formatos: (XX) XXXX-XXXX ou (XX) XXXXX-XXXX ou apenas os numeros com o DD de dois digitos sem formatação.\n";
 
         // Validação do Cartão do SUS (15 dígitos)
         if (string.IsNullOrWhiteSpace(CartaoSus))
