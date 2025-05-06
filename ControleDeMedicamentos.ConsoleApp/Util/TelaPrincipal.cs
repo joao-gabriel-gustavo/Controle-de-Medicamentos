@@ -49,7 +49,7 @@ public class TelaPrincipal
             repositorioFuncionario);
 
         IRepositorioRequisicaoSaida repositorioRequisicoesSaida = new RepositorioRequisicaoSaidaEmArquivo(contexto);
-        telaRequisicoesSaida = new TelaRequisicaoSaida(repositorioRequisicoesSaida, telaPaciente, telaMedicamento, telaPrescricaoMedica, (RepositorioMedicamentoEmArquivo)repositorioMedicamento, (RepositorioPacienteEmArquivo)repositorioPaciente, (RepositorioPrescricaoMedicaEmArquivo)repositorioPrescricaoMedica;
+        telaRequisicoesSaida = new TelaRequisicaoSaida(repositorioRequisicoesSaida, telaPaciente, telaMedicamento, telaPrescricaoMedica, (RepositorioMedicamentoEmArquivo)repositorioMedicamento, (RepositorioPacienteEmArquivo)repositorioPaciente, (RepositorioPrescricaoMedicaEmArquivo)repositorioPrescricaoMedica);
     }
 
     public void ApresentarMenuPrincipal()
