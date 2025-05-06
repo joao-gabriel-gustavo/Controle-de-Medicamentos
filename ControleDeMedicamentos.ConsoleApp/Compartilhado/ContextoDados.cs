@@ -20,8 +20,9 @@ public class ContextoDados
     public List<Paciente> Pacientes { get; set; }
     public List<Medicamento> Medicamentos { get; set; }
     public List<Funcionario> Funcionarios { get; set; }
-    public List<RequisicaoSaida> requisicaoSaida { get; set; }
+    public List<PrescricaoMedica> PrescricoesMedicas { get; set; }
     public List<RequisicaoEntrada> RequisicoesEntrada { get; set; }
+    public List<RequisicaoSaida> RequisicoesSaida { get; set; }
 
     public ContextoDados()
     {
@@ -29,8 +30,9 @@ public class ContextoDados
         Pacientes = new List<Paciente>();
         Medicamentos = new List<Medicamento>();
         Funcionarios = new List<Funcionario>();
-        requisicaoSaida = new List<RequisicaoSaida>();
+        PrescricoesMedicas = new List<PrescricaoMedica>();
         RequisicoesEntrada = new List<RequisicaoEntrada>();
+        RequisicoesSaida = new List<RequisicaoSaida>();
     }
 
     public ContextoDados(bool carregarDados) : this()
@@ -76,8 +78,9 @@ public class ContextoDados
         Pacientes = contextoArmazenado.Pacientes;
         Medicamentos = contextoArmazenado.Medicamentos;
         Funcionarios = contextoArmazenado.Funcionarios;
-        requisicaoSaida = contextoArmazenado.requisicaoSaida;
+        PrescricoesMedicas = contextoArmazenado.PrescricoesMedicas;
         RequisicoesEntrada = contextoArmazenado.RequisicoesEntrada;
+        RequisicoesSaida = contextoArmazenado.RequisicoesSaida;
     }
 }
 
