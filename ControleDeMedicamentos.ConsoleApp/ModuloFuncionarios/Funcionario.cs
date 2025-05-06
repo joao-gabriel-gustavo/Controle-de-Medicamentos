@@ -36,7 +36,7 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloFuncionarios
                 erros += "O campo 'Telefone' é obrigatório.\n";
             else if (!Regex.IsMatch(Telefone, @"^\(\d{2}\)\s\d{4,5}-\d{4}$") &&
                     !Regex.IsMatch(Telefone, @"^\(\d{2}\)\s\d{8,9}$"))
-                erros += "O campo 'Telefone' deve seguir um dos formatos: (XX) XXXX-XXXX ou (XX) XXXXX-XXXX ou apenas os numeros com o DD de dois digitos sem formatação.\n";
+                erros += "O campo 'Telefone' deve seguir um dos formatos: (XX) XXXX-XXXX ou (XX) XXXXX-XXXX";
 
             if (string.IsNullOrEmpty(CPF))
                 erros += "O campo CPF é obrigatório.\n";
