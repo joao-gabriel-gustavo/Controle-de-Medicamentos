@@ -1,4 +1,5 @@
 ﻿using ControleDeMedicamentos.ConsoleApp.Compartilhado;
+using ControleDeMedicamentos.ConsoleApp.ModuloMedicamento;
 using ControleDeMedicamentos.ConsoleApp.Util;
 
 namespace ControleDeMedicamentos.ConsoleApp.ModuloPrescricoesMedicas
@@ -7,26 +8,45 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloPrescricoesMedicas
     {
         private IRepositorioPrescricaoMedica repositorioPrescricao;
 
-        public TelaPrescricaoMedica(IRepositorioPrescricaoMedica repositorio) : base("Prescrição Médica", repositorio)
+        public IRepositorioMedicamento repositorioMedicamento;
+
+        public TelaPrescricaoMedica(IRepositorioPrescricaoMedica repositorio, IRepositorioMedicamento repositorioMedicamento) : base("Prescrição Médica", repositorio)
         {
+            this.repositorioMedicamento = repositorioMedicamento;
             this.repositorioPrescricao = repositorio;
         }
 
         public override PrescricaoMedica ObterDados()
         {
-            Console.Write("Digite o CRM do médico: ");
-            string CRM = Console.ReadLine() ?? string.Empty;
+            List<Medicamento> medicamentos = repositorioMedicamento.SelecionarRegistros();
 
-            Console.Write("Digite a data da prescrição (dd/mm/yyyy): ");
-            DateTime dataPrescricao;
-            while (!DateTime.TryParse(Console.ReadLine(), out dataPrescricao))
-            {
-                Console.Write("Data inválida. Digite novamente (dd/mm/yyyy): ");
+            if (medicamentos.Count == 0)
+
+            { 
+                Console.WriteLine("Para realizar a prescrição voce precisa de medicamentos registrados\n Aperte ENTER para continuar");
+                Console.ReadLine();
+
+
+                return null;
             }
 
-            PrescricaoMedica PrescricaoMedica = new PrescricaoMedica(CRM, dataPrescricao);
 
-            return PrescricaoMedica;
+            else
+            {
+                Console.Write("Digite o CRM do médico: ");
+                string CRM = Console.ReadLine() ?? string.Empty;
+
+                Console.Write("Digite a data da prescrição (dd/mm/yyyy): ");
+                DateTime dataPrescricao;
+                while (!DateTime.TryParse(Console.ReadLine(), out dataPrescricao))
+                {
+                    Console.Write("Data inválida. Digite novamente (dd/mm/yyyy): ");
+                }
+
+                PrescricaoMedica PrescricaoMedica = new PrescricaoMedica(CRM, dataPrescricao);
+
+                return PrescricaoMedica;
+            }
         }
         
         protected override void ExibirCabecalhoTabela()

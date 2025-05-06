@@ -38,7 +38,7 @@ public class TelaPrincipal
         telaFuncionario = new TelaFuncionario(repositorioFuncionario);
 
         IRepositorioPrescricaoMedica repositorioPrescricaoMedica = new RepositorioPrescricaoMedicaEmArquivo(contexto);
-        telaPrescricaoMedica = new TelaPrescricaoMedica(repositorioPrescricaoMedica);
+        telaPrescricaoMedica = new TelaPrescricaoMedica(repositorioPrescricaoMedica, repositorioMedicamento);
 
         IRepositorioRequisicaoEntrada repositorioRequisicaoEntrada = new RepositorioRequisicaoEntradaEmArquivo(contexto, (RepositorioMedicamentoEmArquivo)repositorioMedicamento);
         telaRequisicaoEntrada = new TelaRequisicaoEntrada(
