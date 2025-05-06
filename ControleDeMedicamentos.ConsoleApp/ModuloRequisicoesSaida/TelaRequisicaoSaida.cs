@@ -4,26 +4,28 @@ using ControleDeMedicamentos.ConsoleApp.Compartilhado;
 using ControleDeMedicamentos.ConsoleApp.ModuloFuncionarios;
 using ControleDeMedicamentos.ConsoleApp.ModuloMedicamento;
 using ControleDeMedicamentos.ConsoleApp.ModuloPaciente;
+using ControleDeMedicamentos.ConsoleApp.ModuloPrescricoesMedicas;
 using ControleDeMedicamentos.ConsoleApp.Util;
 
 namespace ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida
 {
     public class TelaRequisicaoSaida : TelaBase<RequisicaoSaida>, ITelaCrud
     {
-        public Paciente pacienteSelecionado = new Paciente("tralala", "tralala", "tralala");
-        public Medicamento medicamentoSelecionado = new Medicamento("tralala", "tralala", 0, default!);
         public TelaPaciente telaPaciente;
         public TelaMedicamento telaMedicamento;
+        public TelaPrescricaoMedica telaPrescricaoMedica;
         public RepositorioMedicamentoEmArquivo repositorioMedicamento;
         public RepositorioPacienteEmArquivo repositorioPaciente;
+        public RepositorioPrescricaoMedicaEmArquivo repositorioPrescricaoMedica;
 
-        public TelaRequisicaoSaida(IRepositorioRequisicaoSaida repositorio, TelaPaciente telaPaciente, TelaMedicamento telaMedicamento, RepositorioMedicamentoEmArquivo repositorioMedicamento, RepositorioPacienteEmArquivo repositorioPaciente) : base("Requisicoes de Saida", repositorio)
+        public TelaRequisicaoSaida(IRepositorioRequisicaoSaida repositorio, TelaPaciente telaPaciente, TelaMedicamento telaMedicamento, TelaPrescricaoMedica telaPrescricaoMedica, RepositorioMedicamentoEmArquivo repositorioMedicamento, RepositorioPacienteEmArquivo repositorioPaciente, RepositorioPrescricaoMedicaEmArquivo repositorioPrescricaoMedica) : base("Requisicoes de Saida", repositorio)
         {
-            this.telaPaciente = telaPaciente;
             this.telaMedicamento = telaMedicamento;
+            this.telaPaciente = telaPaciente;
             this.repositorioMedicamento = repositorioMedicamento;
             this.repositorioPaciente = repositorioPaciente;
-            this.telaPaciente = telaPaciente;
+            this.telaPrescricaoMedica = telaPrescricaoMedica;
+            this.repositorioPrescricaoMedica = repositorioPrescricaoMedica;
         }
 
         public override void CadastrarRegistro()
@@ -67,9 +69,24 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida
             Console.WriteLine("Digite o id do paciente que esta sendo feito a requisição");
             int idPaciente = Convert.ToInt32(Console.ReadLine());
 
-            pacienteSelecionado = repositorioPaciente.SelecionarRegistroPorId(idPaciente);
+            Paciente pacienteSelecionado = repositorioPaciente.SelecionarRegistroPorId(idPaciente);
 
-            if(pacienteSelecionado == null)
+            if (pacienteSelecionado == null)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("Id invalido, Aperte ENTER para tentar novamente");
+                Console.ReadLine();
+                Console.ResetColor();
+                ObterDados();
+            }
+
+            telaPrescricaoMedica.VisualizarRegistros(false);
+
+            Console.WriteLine("Digite o id da prescrição medica que sera associada ao paciente");
+            int idPrescricaoMedica = Convert.ToInt32(Console.ReadLine());
+            PrescricaoMedica prescricaoMedicaSelecionada = repositorioPrescricaoMedica.SelecionarRegistroPorId(idPrescricaoMedica);
+
+            if (prescricaoMedicaSelecionada == null)
             {
                 Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.WriteLine("Id invalido, Aperte ENTER para tentar novamente");
@@ -82,8 +99,7 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida
 
             Console.WriteLine("Digite o id que do medicamento que esta sendo feito a requisição");
             int idMedicamento = Convert.ToInt32(Console.ReadLine());
-
-            medicamentoSelecionado = repositorioMedicamento.SelecionarRegistroPorId(idMedicamento);
+            Medicamento medicamentoSelecionado = repositorioMedicamento.SelecionarRegistroPorId(idMedicamento);
 
             if (medicamentoSelecionado == null)
             {
@@ -98,12 +114,13 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida
 
             RequisicaoSaida requisicaoSaida = new RequisicaoSaida();
             bool quantidadeSuportada = VerificarQuantidadeMedicamento(idMedicamento,  quantidadeMedicamento);
-           
+
             if (quantidadeSuportada)
             {
                 requisicaoSaida.dataRequisicaoSaida = dataRequisicaoSaida;
                 requisicaoSaida.paciente = pacienteSelecionado;
-                requisicaoSaida.medicamentoRequisicao = medicamentoSelecionado;
+                requisicaoSaida.medicamento = medicamentoSelecionado;
+                requisicaoSaida.prescricaoMedica = prescricaoMedicaSelecionada;
                 return requisicaoSaida;
             }
             return requisicaoSaida;
@@ -135,18 +152,17 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida
             }
             return quantidadeSuportada;
         }
-   
         protected override void ExibirCabecalhoTabela()
         {
-            Console.WriteLine("{0, -10} | {1, -20} | {2, -30} | {3, -30}",
-            "Id", "Data", "Paciente", "Medicamento");
+            Console.WriteLine("{0, -10} | {1, -20} | {2, -30} | {3, -30}, {4, -30}",
+            "Id", "Data", "Paciente", "Medicamento", "Prescrição Medica ID}");
         }
         protected override void ExibirLinhaTabela(RequisicaoSaida requisicaoSaida)
         {
-            if (requisicaoSaida.paciente != null && requisicaoSaida.medicamentoRequisicao != null)
+            if (requisicaoSaida.paciente != null && requisicaoSaida.medicamento != null)
             {
-                Console.WriteLine("{0, -10} | {1, -20} | {2, -30} | {3, -30}",
-                requisicaoSaida.Id, requisicaoSaida.dataRequisicaoSaida.ToShortDateString(), requisicaoSaida.paciente.Nome, requisicaoSaida.medicamentoRequisicao.Nome);
+                Console.WriteLine("{0, -10} | {1, -20} | {2, -30} | {3, -30}, {4, -30}",
+                requisicaoSaida.Id, requisicaoSaida.dataRequisicaoSaida.ToShortDateString(), requisicaoSaida.paciente.Nome, requisicaoSaida.medicamento.Nome, requisicaoSaida.prescricaoMedica.Id);
             }
         }
     }

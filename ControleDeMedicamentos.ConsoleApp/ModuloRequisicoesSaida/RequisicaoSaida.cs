@@ -2,6 +2,7 @@
 using ControleDeMedicamentos.ConsoleApp.Compartilhado;
 using ControleDeMedicamentos.ConsoleApp.ModuloMedicamento;
 using ControleDeMedicamentos.ConsoleApp.ModuloPaciente;
+using ControleDeMedicamentos.ConsoleApp.ModuloPrescricoesMedicas;
 
 namespace ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida
 {
@@ -9,9 +10,8 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida
     {
             public DateTime dataRequisicaoSaida { get; set; }
             public Paciente paciente { get; set; }
-            public Medicamento medicamentoRequisicao { get; set; }
-
-            
+            public Medicamento medicamento { get; set; }
+            public PrescricaoMedica prescricaoMedica { get; set; } 
         public RequisicaoSaida()
         {
         }
@@ -19,7 +19,8 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida
         {
             dataRequisicaoSaida = requisicaoSaidaEditada.dataRequisicaoSaida;
             paciente = requisicaoSaidaEditada.paciente;
-            medicamentoRequisicao = requisicaoSaidaEditada.medicamentoRequisicao;
+            medicamento = requisicaoSaidaEditada.medicamento;
+            prescricaoMedica = requisicaoSaidaEditada.prescricaoMedica;
         }
 
         public override string Validar()

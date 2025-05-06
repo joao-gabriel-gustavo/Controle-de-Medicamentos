@@ -7,9 +7,6 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloFuncionarios
         public RepositorioFuncionarioEmArquivo(ContextoDados contexto) : base(contexto)
         {
         }
-
-
-
         public bool VerificarCPF(string cpf)
         {
             List<Funcionario> funcionarios = contexto.Funcionarios;
@@ -29,7 +26,5 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloFuncionarios
         {
                   return contexto.Funcionarios;
         }
-
- 
     }
 }
