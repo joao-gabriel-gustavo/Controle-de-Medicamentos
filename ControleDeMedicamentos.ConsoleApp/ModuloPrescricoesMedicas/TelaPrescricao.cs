@@ -15,21 +15,47 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloPrescricoesMedicas
             this.repositorioMedicamento = repositorioMedicamento;
             this.repositorioPrescricao = repositorio;
         }
+        public override void CadastrarRegistro()
+        {
+            ExibirCabecalho();
 
+            Console.WriteLine();
+
+            Console.WriteLine($"Cadastrando Requisição Medica...");
+            Console.WriteLine("--------------------------------------------");
+
+            Console.WriteLine();
+
+            
+            PrescricaoMedica novoRegistro = ObterDados();
+            if (novoRegistro != null)
+            {
+                string erros = novoRegistro.Validar();
+
+                if (erros.Length > 0)
+                {
+                    Notificador.ExibirMensagem(erros, ConsoleColor.Red);
+
+                    CadastrarRegistro();
+
+                    return;
+                }
+
+                repositorio.CadastrarRegistro(novoRegistro);
+                Notificador.ExibirMensagem("O registro foi concluído com sucesso!", ConsoleColor.Green);
+            }
+        }
+        
         public override PrescricaoMedica ObterDados()
         {
             List<Medicamento> medicamentos = repositorioMedicamento.SelecionarRegistros();
 
             if (medicamentos.Count == 0)
-
             { 
-                Console.WriteLine("Para realizar a prescrição voce precisa de medicamentos registrados\n Aperte ENTER para continuar");
+                Console.WriteLine("Para realizar a prescrição voce precisa de medicamentos registrados\nAperte ENTER para continuar");
                 Console.ReadLine();
-
-
                 return null;
             }
-
 
             else
             {
