@@ -152,6 +152,13 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida
             }
             return quantidadeSuportada;
         }
+
+        public void  VisualizarRequisicaoPacienteEspecifico()
+        {
+            telaPaciente.VisualizarRegistros(false);
+
+            Console.WriteLine("Digite qual ");
+        }
         protected override void ExibirCabecalhoTabela()
         {
             Console.WriteLine("{0, -10} | {1, -20} | {2, -30} | {3, -30}, {4, -30}",
