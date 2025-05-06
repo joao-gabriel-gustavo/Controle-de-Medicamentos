@@ -26,6 +26,13 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida
         public override string Validar()
         {
             string erros = "";
+
+            if (dataRequisicaoSaida == default)
+                erros += "A data de prescricao é invalida.\n";
+
+            else if (dataRequisicaoSaida > DateTime.Today)
+                erros += "A data de prescricao não pode ser futura.\n";
+
             return erros.Trim();
         }
     }
