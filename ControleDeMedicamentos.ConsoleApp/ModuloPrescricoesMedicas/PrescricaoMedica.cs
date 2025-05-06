@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+
 
 namespace ControleDeMedicamentos.ConsoleApp.ModuloPrescricoesMedicas
 {
@@ -27,7 +29,20 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloPrescricoesMedicas
         public override string Validar()
         {
             string erros = "";
-            return erros;
+
+            if (string.IsNullOrWhiteSpace(CRM))
+                erros += "O campo CRM é obrigatório.\n";
+            else if (!Regex.IsMatch(CRM, @"^\d{6}$"))
+                erros += "O campo CRM deve conter exatamente 6 digitos numericos.\n";
+
+
+            if (DataPrescricao == default)
+                erros += "A data de prescricao é invalida.\n";
+            else if (DataPrescricao > DateTime.Today)
+                erros += "A data de prescricao não pode ser futura.\n";
+
+
+                return erros;
         }
     }
 }
