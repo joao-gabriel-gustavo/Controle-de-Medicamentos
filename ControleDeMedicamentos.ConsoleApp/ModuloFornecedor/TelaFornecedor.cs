@@ -1,4 +1,5 @@
 ﻿using ControleDeMedicamentos.ConsoleApp.Compartilhado;
+using ControleDeMedicamentos.ConsoleApp.ModuloFuncionarios;
 using ControleDeMedicamentos.ConsoleApp.ModuloMedicamento;
 using ControleDeMedicamentos.ConsoleApp.Util;
 
@@ -14,6 +15,68 @@ public class TelaFornecedor : TelaBase<Fornecedor>, ITelaCrud
         this.repositorioMedicamento = repositorioMedicamento;
     }
 
+    public override void EditarRegistro()
+    {
+        ExibirCabecalho();
+
+        Console.WriteLine($"Editando Fornecedor");
+        Console.WriteLine("----------------------------------------");
+
+        Console.WriteLine();
+
+        VisualizarRegistros(false);
+
+        Console.Write("Digite o ID do registro que deseja selecionar: ");
+        int idRegistro = Convert.ToInt32(Console.ReadLine());
+
+        Console.WriteLine("--------------------------------------------------------------------------");
+        Console.WriteLine("Coloque o mesmo CNPJ que foi usado anteriormente");
+        Console.WriteLine("--------------------------------------------------------------------------");
+
+        Fornecedor registroEditado = ObterDados();
+
+        List<Fornecedor> fornecedoress = repositorio.SelecionarRegistros();
+
+        bool cnpjAlterado = true;
+        foreach (Fornecedor item in fornecedoress)
+        {
+            if (registroEditado.CNPJ == item.CNPJ)
+            {
+                cnpjAlterado = false;
+            }
+        }
+
+        if (cnpjAlterado)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("Nao é possivel alterar o CNPJ aperte enter para tentar novamente");
+            Console.ReadLine();
+            Console.ResetColor();
+            registroEditado = null;
+            EditarRegistro();
+        }
+        string erros = registroEditado.Validar();
+
+        if (erros.Length > 0)
+        {
+            Notificador.ExibirMensagem(erros, ConsoleColor.Red);
+
+            EditarRegistro();
+
+            return;
+        }
+
+        bool conseguiuEditar = repositorio.EditarRegistro(idRegistro, registroEditado);
+
+        if (!conseguiuEditar)
+        {
+            Notificador.ExibirMensagem("Houve um erro durante a edição do registro...", ConsoleColor.Red);
+
+            return;
+        }
+
+        Notificador.ExibirMensagem("O registro foi editado com sucesso!", ConsoleColor.Green);
+    }
     public override void ExcluirRegistro()
     {
         

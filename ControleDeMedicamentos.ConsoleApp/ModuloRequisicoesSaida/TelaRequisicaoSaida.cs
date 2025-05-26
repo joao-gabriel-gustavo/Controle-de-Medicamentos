@@ -154,23 +154,25 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida
             {
                 if (idMedicamento == repositorioMedicamento.registros[i].Id)
                 {
-                    if (repositorioMedicamento.registros[i].QuantidadeEmEstoque - quantidadeMedicamentos > 0)
-                    {
-                        repositorioMedicamento.registros[i].QuantidadeEmEstoque = (repositorioMedicamento.registros[i].QuantidadeEmEstoque - quantidadeMedicamentos);
-                        quantidadeSuportada = true;
-                    }
+                 
 
-                    else if (repositorioMedicamento.registros[i].QuantidadeEmEstoque - quantidadeMedicamentos > 0 && repositorioMedicamento.registros[i].QuantidadeEmEstoque - quantidadeMedicamentos < 20)
+                     if (repositorioMedicamento.registros[i].QuantidadeEmEstoque - quantidadeMedicamentos > 0 && repositorioMedicamento.registros[i].QuantidadeEmEstoque - quantidadeMedicamentos <= 20)
                     {
-                        repositorioMedicamento.registros[i].QuantidadeEmEstoque = (repositorioMedicamento.registros[i].QuantidadeEmEstoque - quantidadeMedicamentos);
-                        quantidadeSuportada = true;
-                        quantidadeSuportada = true;
                         Console.ForegroundColor = ConsoleColor.DarkRed;
-                        Console.WriteLine("Resgatando essa quantidade voce irá ficara em falta\nAperte ENTER para continuar");
+                        Console.WriteLine($"Resgatando essa quantidade voce irá ficara com apenas {repositorioMedicamento.registros[i].QuantidadeEmEstoque - quantidadeMedicamentos} unidades disponiveis no estoque \nAperte ENTER para continuar");
                         Console.ReadLine();
+                        Console.ResetColor();
+                        repositorioMedicamento.registros[i].QuantidadeEmEstoque = (repositorioMedicamento.registros[i].QuantidadeEmEstoque - quantidadeMedicamentos);
+                        quantidadeSuportada = true;
                     }
 
-                    else if(repositorioMedicamento.registros[i].QuantidadeEmEstoque - quantidadeMedicamentos == 0)
+                    else if (repositorioMedicamento.registros[i].QuantidadeEmEstoque - quantidadeMedicamentos > 0)
+                    {
+                        repositorioMedicamento.registros[i].QuantidadeEmEstoque = (repositorioMedicamento.registros[i].QuantidadeEmEstoque - quantidadeMedicamentos);
+                        quantidadeSuportada = true;
+                    }
+
+                    else if (repositorioMedicamento.registros[i].QuantidadeEmEstoque - quantidadeMedicamentos == 0)
                     {
                         repositorioMedicamento.registros[i].QuantidadeEmEstoque = (repositorioMedicamento.registros[i].QuantidadeEmEstoque - quantidadeMedicamentos);
                         quantidadeSuportada = true;
