@@ -2,6 +2,8 @@
 using ControleDeMedicamentos.ConsoleApp.ModuloMedicamento;
 using ControleDeMedicamentos.ConsoleApp.ModuloRequisicoesSaida;
 using ControleDeMedicamentos.ConsoleApp.Util;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Text;
 
 namespace ControleDeMedicamentos.ConsoleApp
 {
@@ -9,42 +11,46 @@ namespace ControleDeMedicamentos.ConsoleApp
     {
         static void Main(string[] args)
         {
-            TelaPrincipal telaPrincipal = new TelaPrincipal();
+            //criar um servidor web
+            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-            while (true)
+            WebApplication app = builder.Build();
+
+            app.MapGet("/", PaginaInicial);
+
+            app.MapGet("/Medicamentos/visualizar", VisualizarMedicamentos);
+
+            app.Run();
+        }
+
+        static Task VisualizarMedicamentos(HttpContext context)
+        {
+            ContextoDados contextoDados = new ContextoDados();
+            IRepositorioMedicamento repositorioMedicamento = new RepositorioMedicamentoEmArquivo(contextoDados);
+
+            string conteudo = File.ReadAllText("ModuloMedicamento/html/Visualizar.html");
+
+            StringBuilder stringBuilder = new StringBuilder(conteudo);
+
+            foreach (Medicamento m in repositorioMedicamento.SelecionarRegistros())
             {
-                telaPrincipal.ApresentarMenuPrincipal();
+                string itemLista = $"Li>{false.ToString()}</Li> #medicamento#";
 
-                ITelaCrud telaSelecionada = telaPrincipal.ObterTela();
-
-                if (telaSelecionada == null)
-                    break;
-
-                 char opcaoEscolhida = telaSelecionada.ApresentarMenu();
-
-                if (opcaoEscolhida == 'S')
-                    break;
-
-                if(telaSelecionada is TelaRequisicaoSaida)
-                {
-                    TelaRequisicaoSaida telaRequisicaoSaida = (TelaRequisicaoSaida)telaSelecionada;
-                    if(opcaoEscolhida == '5')
-                        telaRequisicaoSaida.VisualizarRequisicaoPacienteEspecifico();
-                }
-
-                switch (opcaoEscolhida)
-                {
-                    case '1': telaSelecionada.CadastrarRegistro(); break;
-
-                    case '2': telaSelecionada.EditarRegistro(); break;
-
-                    case '3': telaSelecionada.ExcluirRegistro(); break;
-
-                    case '4': telaSelecionada.VisualizarRegistros(true); break;
-
-                    default: break;
-                }
+                stringBuilder.Replace("#Fabricantes#", itemLista);
             }
+            stringBuilder.Replace("#Fabricantes#", "");
+
+            string conteudoString = stringBuilder.ToString();
+
+
+            return context.Response.WriteAsync(conteudo);
+        }
+
+        static Task PaginaInicial(HttpContext context)
+        {
+            string conteudo = File.ReadAllText("html/PaginaInicial.html");
+
+            return context.Response.WriteAsync(conteudo);
         }
     }
 }

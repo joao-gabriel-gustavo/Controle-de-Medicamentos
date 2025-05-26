@@ -59,4 +59,9 @@ public class Medicamento : EntidadeBase<Medicamento>
     {
         return QuantidadeEmEstoque < 20;
     }
+
+    public override string ToString()
+    {
+        return $"Id: {Id}, Nome: {Nome}, Descrição: {Descricao}, Quantidade em Estoque: {QuantidadeEmEstoque}, Fornecedor: {Fornecedor?.Nome ?? "Nenhum Fornecedor"}";
+    }
 } 
